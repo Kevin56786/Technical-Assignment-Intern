@@ -1,0 +1,48 @@
+using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class FiveLevelLogic : MonoBehaviour
+{
+    [SerializeField] private int _sceneIndexForTwoLevel;
+
+    [SerializeField] private InputField _inputField;
+
+    [SerializeField] private GameObject _canvasRightAnswer;
+    [SerializeField] private GameObject _canvasWrongAnswer;
+
+    private const int RIGHT_ANSWER = 300;
+
+    private void Start()
+    {
+        _inputField.Select();
+        _inputField.ActivateInputField();
+    }
+
+    public void GetTheNumberOfStepsFromTheText()
+    {
+        try
+        {
+            int stepCount = Convert.ToInt32(_inputField.text);
+
+            if (stepCount == RIGHT_ANSWER)
+            {
+                SceneManager.LoadScene(_sceneIndexForTwoLevel);
+            }
+            else
+            {
+                _canvasWrongAnswer.SetActive(true);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+        }
+    }
+
+    public void LoseLevel()
+    {
+        _canvasWrongAnswer.SetActive(false);
+    }
+}
